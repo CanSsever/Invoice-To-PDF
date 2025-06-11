@@ -10,6 +10,7 @@ for filepath in filepaths:
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
 
     pdf = FPDF(orientation='p', unit='mm', format='A4')
+
     pdf.add_page()
     filename = Path(filepath).stem
     invoice_nr = filename.split('-')[0]

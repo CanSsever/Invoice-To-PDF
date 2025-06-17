@@ -21,7 +21,7 @@ for filepath in filepaths:
 
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
     ##Tablodaki basliklari aliyoruz, tablodaki basliklari tek bir kere kullanacagimiz icin
-    # yani basliklar sabit oldugu icin bu islemi for loopun disinda yapiyoruz
+    # yani basliklar sabit oldugu icin bu islemi asagidaki verileri aldigimiz  for loopun disinda yapiyoruz
 
     columns = list(df.columns)
     columns = [item.replace("_", " ").title() for item in columns]
@@ -45,5 +45,20 @@ for filepath in filepaths:
         pdf.cell(w=30, h=8, txt=str(row["amount_purchased"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, ln=1)
+
+    total_sum = df["total_price"].sum()
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=60, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt=str(total_sum), border=1, ln=1)
+
+    #toplam fiyati ekleme
+    pdf.set_font(family="Times", size=14, style='B')
+    pdf.cell(w=30, h=8, txt=f"The total price is {total_sum}", ln=1)
+
+    ## Sirket adi ekleme
+    pdf.set_font(family="Times", size=14, style='B')
+    pdf.cell(w=30, h=8, txt=f"SeverCan.com", ln=1)
 
     pdf.output(f"PDFs/{invoice_nr}.pdf")
